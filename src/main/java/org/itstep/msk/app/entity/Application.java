@@ -24,17 +24,17 @@ public class Application {
     private Calendar createDate;
 
     @NotNull
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "state_id", referencedColumnName = "id")
     private ApplicationState state;
 
     @NotNull
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "priority_id", referencedColumnName = "id")
     private ApplicationPriority priority;
 
     @NotNull
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "contract_id", referencedColumnName = "id")
     private Contract contract;
 
