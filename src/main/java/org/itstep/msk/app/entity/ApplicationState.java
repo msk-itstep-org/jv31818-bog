@@ -27,4 +27,9 @@ public class ApplicationState {
     public void setState(String state) {
         this.state = state;
     }
+
+    @Override
+    public String toString() {
+        return getState();
+    }
 }

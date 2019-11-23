@@ -40,4 +40,9 @@ public class Role {
         }
         return ((Role) obj).getId().equals(getId());
     }
+
+    @Override
+    public String toString() {
+        return getRole();
+    }
 }

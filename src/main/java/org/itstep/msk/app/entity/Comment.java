@@ -72,4 +72,9 @@ public class Comment {
         }
         return ((Comment) obj).getId().equals(getId());
     }
+
+    @Override
+    public String toString() {
+        return getComment();
+    }
 }

@@ -129,4 +129,9 @@ public class User {
         }
         return ((User) obj).getId().equals(getId());
     }
+
+    @Override
+    public String toString() {
+        return getFirstName() + " " + getMiddleName() + " " + getLastName();
+    }
 }

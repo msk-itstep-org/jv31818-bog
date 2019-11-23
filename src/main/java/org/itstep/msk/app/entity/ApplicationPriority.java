@@ -27,4 +27,9 @@ public class ApplicationPriority {
     public void setPriority(String priority) {
         this.priority = priority;
     }
+
+    @Override
+    public String toString() {
+        return getPriority();
+    }
 }

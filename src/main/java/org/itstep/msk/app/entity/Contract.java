@@ -27,4 +27,9 @@ public class Contract {
     public void setContract(String contract) {
         this.contract = contract;
     }
+
+    @Override
+    public String toString() {
+        return getContract();
+    }
 }
