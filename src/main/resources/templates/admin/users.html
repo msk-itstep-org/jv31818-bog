@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Личный кабинет</title>
+</head>
+<body>
+    <h1>Личный кабинет администратора</h1>
+    <button id="add" type="button" onclick="location.href='/admin/user_add'">Добавить пользователя</button>
+    <table border="1 px solid black">
+        <thead>
+        <tr>
+            <th style="width: 5%">№</th>
+            <th style="width: 20%">Имя пользователя</th>
+            <th style="width: 20%">Логин пользователя</th>
+            <th style="width: 20%">Роли</th>
+            <th style="width: 10%">Редактирование</th>
+            <th style="width: 10%">Удаление</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user, iter : ${users}" align="center">
+            <td th:inline="text">[[${iter.index+1}]]</td>
+            <td th:text="${user.toString()}">User Name</td>
+            <td th:text="${user.username}">Login</td>
+            <td th:text="${user.roles}">Roles</td>
+            <td border="dotted"><a href="edit"
+                    class="edit"
+                    th:attr="data-user-id=${user.id}"
+                    title="Удалить">Редактировать</a>
+            </td>
+            <td>
+            <a type="button" href="#"
+                    class="remove"
+                    th:attr="data-user-id=${user.id}"
+                    title="Удалить">Удалить</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <script src="/js/jquery-3.4.1.js"></script>
+    <script>
+            $("a.remove").click(function (event) {
+                event.preventDefault();
+                var tr = $(event.target).parent.parent;
+                let userId = $(event.target).attr('data-user-id');
+                $.ajax({
+                    url: '/admin/user/' + userId,
+                    method: 'DELETE',
+                    success: function () {
+                    href = '/admin/users'
+                        window.location = window.location.href;
+                    },
+                    error: function () {}
+                });
+            });
+
+    </script>
+</body>
+</html>

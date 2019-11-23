@@ -1,5 +1,7 @@
 package org.itstep.msk.app.entity;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
@@ -26,28 +28,20 @@ public class User {
 
     @NotNull
     @Column
-    private String login;
+    private String username;
 
     @NotNull
     @Column
     private String password;
 
     @NotNull
-    @ManyToMany
+    @ManyToMany(targetEntity = Role.class)
     @JoinTable(
             name = "user_roles",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
     )
     private Set<Role> roles;
-
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "group_id", referencedColumnName = "id")
-    private Group group;
-
-    @OneToMany(mappedBy = "user")
-    private Set<Comment> comments;
 
     public Long getId() {
         return id;
@@ -77,12 +71,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -101,21 +95,6 @@ public class User {
         this.roles = roles;
     }
 
-    public Group getGroup() {
-        return group;
-    }
-
-    public void setGroup(Group group) {
-        this.group = group;
-    }
-
-    public Set<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(Set<Comment> comments) {
-        this.comments = comments;
-    }
 
     @Override
     public int hashCode() {
@@ -132,6 +111,15 @@ public class User {
 
     @Override
     public String toString() {
+        if (getMiddleName() == null){
+            return getFirstName() + " " + getLastName();
+        }
         return getFirstName() + " " + getMiddleName() + " " + getLastName();
+    }
+
+    public void removeFromRoles(Role role) {
+        Set<Role> roles = getRoles();
+        roles.remove(role);
+        role.removeUser(this);
     }
 }
