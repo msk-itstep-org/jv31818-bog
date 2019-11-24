@@ -9,13 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+
     @Autowired
     private UserRepository userRepository;
 
@@ -34,9 +35,6 @@ public class AdminController {
     public String delete(@PathVariable Long id) {
         User user = userRepository.findById(id).orElse(null);
         if (user != null) {
-//            user.getRoles().forEach(
-//                    role -> user.removeFromRoles(role)
-//            );
             userRepository.deleteById(id);
             userRepository.flush();
             roleRepository.flush();
@@ -45,19 +43,28 @@ public class AdminController {
         throw new RuntimeException("Not Found");
     }
 
-//    @GetMapping("/user_add")
-//    public String addUser(Model model, @ModelAttribute User user, @ModelAttribute Set<Role> roles) {
-//        Set<Role> allRoles = (Set)roleRepository.findAll();
-//        model.addAttribute("roles", allRoles);
-//        user.setRoles(roles);
-//        userRepository.saveAndFlush(user);
-//        return "admin/user_add";
-//    }
+    @GetMapping("/user_add")
+    public String addUser(Model model) {
+        User user = new User();
+        Set<Role> roles = new HashSet<>();
+        Role role = roleRepository.findById(2L).orElse(new Role());
+        roles.add(role);
+        user.setRoles(roles);
+        model.addAttribute("user", user);
+        return "admin/user_add";
+    }
 
-//    @PostMapping("/user_add")
-//    public String addUser(@ModelAttribute User user, @ModelAttribute Set<Role> roles) {
-//        user.setRoles(roles);
-//        userRepository.saveAndFlush(user);
-//        return "admin/users";
-//    }
+    @PostMapping("/user_add")
+    public String saveUser(@ModelAttribute User user) {
+        if (user.getUsername() == null) {
+            return "redirect:/admin/users";
+        }
+        Set<Role> roles = new HashSet<>();
+        Role role = roleRepository.findById(2L).orElse(new Role());
+        roles.add(role);
+        user.setRoles(roles);
+        userRepository.save(user);
+        userRepository.flush();
+        return "redirect:/user/" + user.getId();
+    }
 }

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Информация о пользователе</title>
+</head>
+<body>
+    <form th:object="${user}"}>
+        <p>
+            Имя: <span id="firstName" th:text="${user.firstName}" type="text" size="10"></span><br/>
+            Отчество: <span id="middleName" th:text="${user.middleName}" type="text" size="10"></span><br/>
+            Фамилия: <span id="lastName" th:text="${user.lastName}" type="text" size="10"></span><br/>
+            Логин: <span id="username" th:text="${user.username}" type="text" size="10"></span><br/>
+            Пароль: <span id="password" th:text="${user.password}" type="password" size="10"></span><br/>
+            Роли: <span th:text="${user.roles}" type="text"></span>
+        </p>
+        <button type="button" onclick="location.href='/admin/users'">Вернуться к списку пользователей</button>
+    </form>
+</body>
+</html>

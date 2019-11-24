@@ -25,7 +25,7 @@
             <td th:text="${user.toString()}">User Name</td>
             <td th:text="${user.username}">Login</td>
             <td th:text="${user.roles}">Roles</td>
-            <td border="dotted"><a href="edit"
+            <td><a href="edit"
                     class="edit"
                     th:attr="data-user-id=${user.id}"
                     title="Удалить">Редактировать</a>
@@ -55,7 +55,6 @@
                     error: function () {}
                 });
             });
-
     </script>
 </body>
 </html>

@@ -19,7 +19,6 @@ public class SecurityController {
     @GetMapping("/login")
     public String getLogin(Model model) {
         model.addAttribute("user", new User());
-
         return "login";
     }
 
@@ -52,24 +51,4 @@ public class SecurityController {
 
         return "redirect:/";
     }
-
-//    @GetMapping("/username")
-//    @ResponseBody
-//    public String username(Principal principal) {
-//        if (principal == null) {
-//            return "no principal";
-//        }
-//
-//        User user = userRepository
-//                .findByUsername(principal.getName())
-//                .orElse(null);
-//
-//        if (user != null) {
-//            return user.getRoles().stream()
-//                    .map(Role::getRole) // Из коллекции объектов Role получаем коллекцию строк - названий ролей
-//                    .collect(Collectors.joining(", ")); // Объединяем коллекцию названий ролей в одну строчку - перечисление через запятую
-//        }
-//
-//        return "no roles";
-//    }
 }
