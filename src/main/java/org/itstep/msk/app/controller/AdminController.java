@@ -45,18 +45,13 @@ public class AdminController {
 
     @GetMapping("/user_add")
     public String addUser(Model model) {
-        User user = new User();
-        Set<Role> roles = new HashSet<>();
-        Role role = roleRepository.findById(2L).orElse(new Role());
-        roles.add(role);
-        user.setRoles(roles);
-        model.addAttribute("user", user);
+        model.addAttribute("user", new User());
         return "admin/user_add";
     }
 
     @PostMapping("/user_add")
     public String saveUser(@ModelAttribute User user) {
-        if (user.getUsername() == null) {
+        if (user.getUsername() == null || user.getUsername().equals("")) {
             return "redirect:/admin/users";
         }
         Set<Role> roles = new HashSet<>();

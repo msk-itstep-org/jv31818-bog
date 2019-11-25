@@ -4,44 +4,53 @@
 <head>
     <meta charset="UTF-8">
     <title>Личный кабинет</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="/css/users_style.css">
 </head>
 <body>
-    <h1>Личный кабинет администратора</h1>
-    <button id="add" type="button" onclick="location.href='/admin/user_add'">Добавить пользователя</button>
-    <table border="1 px solid black">
+    <p id="layout" class="h2">Личный кабинет администратора</p>
+    <p class="fortop text-center">
+        <button id="add" type="button" class="btn btn-info" onclick="location.href='/admin/user_add'">Добавить пользователя</button>
+    </p>
+    <table>
         <thead>
         <tr>
-            <th style="width: 5%">№</th>
-            <th style="width: 20%">Имя пользователя</th>
-            <th style="width: 20%">Логин пользователя</th>
-            <th style="width: 20%">Роли</th>
-            <th style="width: 10%">Редактирование</th>
-            <th style="width: 10%">Удаление</th>
+            <th class="table-borders" style="width: 3%">№</th>
+            <th class="table-borders" style="width: 20%">Имя пользователя</th>
+            <th class="table-borders" style="width: 20%">Логин пользователя</th>
+            <th class="table-borders" style="width: 20%">Роли</th>
+            <th style="width: 3%"></th>
+            <th style="width: 3%"></th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="user, iter : ${users}" align="center">
-            <td th:inline="text">[[${iter.index+1}]]</td>
-            <td th:text="${user.toString()}">User Name</td>
-            <td th:text="${user.username}">Login</td>
-            <td th:text="${user.roles}">Roles</td>
-            <td><a href="edit"
-                    class="edit"
-                    th:attr="data-user-id=${user.id}"
-                    title="Удалить">Редактировать</a>
+        <tr th:each="user, iter : ${users}">
+            <td class="table-borders" th:inline="text">[[${iter.index+1}]]</td>
+            <td class="table-borders" th:text="${user.toString()}">User Name</td>
+            <td class="table-borders" th:text="${user.username}">Login</td>
+            <td class="table-borders" th:text="${user.roles}">Roles</td>
+            <td><a type="image" href="edit"
+                    class="edit-user"
+                    title="Редактировать">
+                <img th:attr="data-user-id=${user.id}" src="/img/edit.png" width="65" height="40" alt="Edit"></a>
             </td>
-            <td>
-            <a type="button" href="#"
-                    class="remove"
-                    th:attr="data-user-id=${user.id}"
-                    title="Удалить">Удалить</a>
+            <td><a type="image" href="#"
+                    class="remove-user"
+                    title="Удалить"><img th:attr="data-user-id=${user.id}" src="/img/remove.png" width="50" height="50" alt="Remove"></a>
             </td>
         </tr>
         </tbody>
     </table>
+    <p class="fortop text-center">
+        <button id="logout" type="button" class="btn btn-info" onclick="location.href='/logout'">Выйти</button>
+    </p>
     <script src="/js/jquery-3.4.1.js"></script>
     <script>
-            $("a.remove").click(function (event) {
+            $("a.remove-user").click(function (event) {
                 event.preventDefault();
                 var tr = $(event.target).parent.parent;
                 let userId = $(event.target).attr('data-user-id');
