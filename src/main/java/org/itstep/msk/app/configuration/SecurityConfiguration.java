@@ -21,12 +21,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
-    // Настройка БД для security
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // Запрос пользователя для аутентификации
+
         String usersQuery = "SELECT username, password, 1 as active FROM users WHERE username = ?";
-        // Запрос ролей пользователя для авторизации
+
         String authoritiesQuery =
                 "SELECT u.username, r.role "
                         + "FROM users u "
@@ -34,7 +33,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         + "INNER JOIN roles r ON r.id = ur.role_id "
                         + "WHERE u.username = ?";
 
-        // Настраиваем аутентификацию и авторизацию через БД (JDBC)
         auth.jdbcAuthentication()
                 .usersByUsernameQuery(usersQuery)
                 .authoritiesByUsernameQuery(authoritiesQuery)
@@ -42,7 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(passwordEncoder);
     }
 
-    // Настройка урлов
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
