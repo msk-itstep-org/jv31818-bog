@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление пользователя</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="/css/user_add_style.css">
+</head>
+<body>
+    <p id="layout" class="h2">
+        Добавление пользователя
+    </p>
+    <form class="fortop" action="" th:action="@{/admin/user_add}" th:object="${user}" method="post" }>
+
+        <p class="text-center fortop">
+            <label for="firstName">Имя</label>
+            <input id="firstName" th:field="*{firstName}" type="text" size="25" placeholder="Имя"><br/>
+
+            <label for="middleName">Отчество</label>
+            <input id="middleName" th:field="*{middleName}" type="text" size="25"
+                   placeholder="Отчество"><br/>
+
+            <label for="lastName">Фамилия</label>
+            <input id="lastName" th:field="*{lastName}" type="text" size="25" placeholder="Фамилия"><br/>
+
+            <label for="username">Логин</label>
+            <input id="username" th:field="*{username}" type="text" size="25" placeholder="Логин"><br/>
+
+
+            <label for="password">Пароль</label>
+            <input id="password" th:field="*{password}" type="password" size="25" placeholder="Пароль"><br/>
+
+            <label for="roles">Роли</label>
+            <input id="roles" type="text" size="25" value="ROLE_USER" disabled>
+        </p>
+        <div class="text-center" role="group">
+            <button id="submitButton" class="btn btn-info" type="submit">Сохранить</button>
+            <button type="reset" class="btn btn-info">Отменить</button>
+            <button type="button" class="btn btn-info" onclick="location.href='/admin/users'">Вернуться</button>
+        </div>
+    </form>
+</body>
+</html>
