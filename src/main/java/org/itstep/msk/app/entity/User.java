@@ -43,6 +43,14 @@ public class User {
     )
     private Set<Role> roles;
 
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "group_id", referencedColumnName = "id")
+    private Group group;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Comment> comments;
+
     public Long getId() {
         return id;
     }
@@ -121,5 +129,21 @@ public class User {
         Set<Role> roles = getRoles();
         roles.remove(role);
         role.removeUser(this);
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 }
